@@ -192,7 +192,7 @@ This step can be foregone if the function is obvious in what it does, for exampl
  * adds several numbers together
  * 
  * @argument: x first number provided to the function
- * @argument: y umber to add to the first number
+ * @argument: y number to add to the first number
  *
  * @returns: the sum of the two numbers
  */
