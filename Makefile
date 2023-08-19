@@ -1,7 +1,7 @@
-TARGET ?= main
-SRC_DIRS ?= ./src
+TARGET ?= libfennec.dylib
+SRC_DIRS := ./fennec
 
-SRCS := $(shell find $(SRC_DIRS) -name *.cpp -or -name *.c -or -name *.s)
+SRCS := $(shell find $(SRC_DIRS) -name "*.cpp" -or -name "*.c" -or -name "*.s")
 OBJS := $(addsuffix .o,$(basename $(SRCS)))
 DEPS := $(OBJS:.o=.d)
 
@@ -15,17 +15,21 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS)) -I$(GLFW_INCLUDE_PATH) -I$(GLEW_INCLUDE
 
 
 LDFLAGS = -lm -L$(GLFW_LIB_PATH) -L$(GLEW_LIB_PATH) -lglfw -lglew -framework OpenGl -framework IOKit -framework Cocoa
-CPPFLAGS ?= $(INC_FLAGS) -MMD -MP -O3 -Wall -Wextra -Werror -pedantic
+LIBLDFLAGS = -dynamiclib -fPIC
+CFLAGS ?= $(INC_FLAGS) -MMD -MP -O3 -Wall -Wextra -Werror -pedantic
 CC = clang
 
 $(TARGET): $(OBJS)
-	$(CC) $(LDFLAGS) $(OBJS) -o $@ $(LOADLIBES) $(LDLIBS)
+	$(CC) $(LDFLAGS) $(LIBLDFLAGS) $(OBJS) -o $@ $(LDLIBS)
+
+test:
+	$(CC) $(INC_FLAGS) $(LDFLAGS) main.c -L. -lfennec -o main
 
 .PHONY: clean
 clean:
 	$(RM) $(TARGET) $(OBJS) $(DEPS)
 
-test:
-	./$(TARGET)
+print-%  : ; @echo $* = $($*)
 
 -include $(DEPS)
+
