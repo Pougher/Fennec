@@ -3,7 +3,7 @@
 
 /* NOTE:
  * If you want to disable shader generation logs, put this before you include
- * this file: #define FENNEC_SHADER_NO_LOGS
+ * this file: #define FENNEC_NO_LOGS
  */
 
 #include <GL/glew.h>

@@ -54,7 +54,7 @@ FennecShader *fennec_shader_new(char *vs, char *fs) {
 
     free((char*)vshader_code);
     free((char*)fshader_code);
-#ifndef FENNEC_SHADER_NO_LOGS
+#ifndef FENNEC_NO_LOGS
     char shader_log_msg[strlen(fs) + strlen(vs) + 128];
     sprintf(
         shader_log_msg,

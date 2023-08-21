@@ -23,6 +23,7 @@ static const int FENNEC_VERSION = 1;
 #include "shader.h"
 #include "fileio.h"
 #include "dynarray.h"
+#include "texture.h"
 
 #endif
 

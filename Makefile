@@ -23,7 +23,7 @@ $(TARGET): $(OBJS)
 	$(CC) $(LDFLAGS) $(LIBLDFLAGS) $(OBJS) -o $@ $(LDLIBS)
 
 test:
-	$(CC) $(INC_FLAGS) $(LDFLAGS) test/main.c -L. -lfennec -o main
+	$(CC) $(INC_FLAGS) $(LDFLAGS) test/main.c -L. -lfennec -o example
 
 .PHONY: clean
 clean:
