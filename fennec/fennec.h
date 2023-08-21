@@ -20,6 +20,9 @@ static const int FENNEC_VERSION = 1;
 #ifdef FENNEC_INCLUDE_EVERYTHING
 
 #include "window.h"
+#include "shader.h"
+#include "fileio.h"
+#include "dynarray.h"
 
 #endif
 

@@ -7,8 +7,9 @@
 #include "log.h"
 
 typedef struct {
+    // the pointer to the GLFW window
     GLFWwindow *window;
-} Fennec_Window;
+} FennecWindow;
 
 
 /*
@@ -20,6 +21,6 @@ typedef struct {
  * @argument: the height of the window context
  * @argument: the name of the window context
  */
-void fennec_window_init(Fennec_Window*, int, int, char*);
+void fennec_window_init(FennecWindow*, int, int, char*);
 
 #endif

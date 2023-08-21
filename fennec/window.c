@@ -1,7 +1,7 @@
 #include "window.h"
 
 void fennec_window_init(
-    Fennec_Window *win,
+    FennecWindow *win,
     int w,
     int h,
     char *name) {
@@ -13,5 +13,3 @@ void fennec_window_init(
     }
     glfwMakeContextCurrent(win->window);
 }
-
-

@@ -129,7 +129,7 @@ float constant_val = 3.5f;
 ```
 ---
 ### Structures and Unions
-When defining structures and unions, always use `typedef` before your structure definition. When naming your structures and unions, use camel case and prefix the name of the structure with the project that structure is a part of, followed by an `_`.
+When defining structures and unions, always use `typedef` before your structure definition. When naming your structures and unions, use camel case and prefix the name of the structure with the project that structure is a part of.
 
 #### Members
 - Must be in byte size order (saves on structure size)
