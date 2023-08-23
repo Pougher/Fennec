@@ -19,84 +19,93 @@ int main(void) {
     fennec_glew_init();
 
     // not ripped from learnopengl i promise
+    // screen quad
+    float quadVertices[] = {
+        -1.0f,  1.0f,  0.0f, 1.0f,
+        -1.0f, -1.0f,  0.0f, 0.0f,
+         1.0f, -1.0f,  1.0f, 0.0f,
 
-    float vertices[] = {
-        0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-        0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-        -0.5f,  0.5f, 0.0f, 0.0f, 1.0f
+        -1.0f,  1.0f,  0.0f, 1.0f,
+         1.0f, -1.0f,  1.0f, 0.0f,
+         1.0f,  1.0f,  1.0f, 1.0f
     };
 
-    unsigned int indices[] = {  // note that we start from 0!
-        0, 1, 3,  // first Triangle
-        1, 2, 3   // second Triangle
-    };
-    unsigned int VBO, VAO, EBO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    unsigned int quadVAO, quadVBO;
+    glGenVertexArrays(1, &quadVAO);
+    glGenBuffers(1, &quadVBO);
+    glBindVertexArray(quadVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
     glBufferData(
         GL_ARRAY_BUFFER,
-        sizeof(vertices),
-        vertices,
+        sizeof(quadVertices),
+        &quadVertices,
         GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(
-        GL_ELEMENT_ARRAY_BUFFER,
-        sizeof(indices),
-        indices,
-        GL_STATIC_DRAW);
-
+    glEnableVertexAttribArray(0);
     glVertexAttribPointer(
         0,
-        3,
+        2,
         GL_FLOAT,
         GL_FALSE,
-        5 * sizeof(float),
+        4 * sizeof(float),
         (void*)0);
-    glEnableVertexAttribArray(0);
-
+    glEnableVertexAttribArray(1);
     glVertexAttribPointer(
         1,
         2,
         GL_FLOAT,
         GL_FALSE,
-        5 * sizeof(float),
-        (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+        4 * sizeof(float),
+        (void*)(2 * sizeof(float)));
 
     // testing shaders
-    FennecShader* shader = fennec_shader_new(
+    FennecShader *shader = fennec_shader_new(
             "test/vertex.glsl",
             "test/fragment.glsl");
-
+    FennecShader *fbshader = fennec_shader_new(
+            "test/vertex_framebuffer.glsl",
+            "test/fragment_framebuffer.glsl");
     // testing textures
-    FennecTexture* texture = fennec_texture_new("test/test_texture.png");
+    FennecTexture *texture = fennec_texture_new(
+        "test/test_texture.png",
+        GL_RGBA);
+    FennecFramebuffer *framebuffer = fennec_framebuffer_new(320, 160);
 
     fennec_shader_use(shader);
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, texture->id);
-    glBindVertexArray(VAO);
 
     while (!glfwWindowShouldClose(win.window)) {
+        fennec_framebuffer_use(framebuffer);
+        fennec_shader_use(shader);
+        glViewport(0, 0, framebuffer->width, framebuffer->height);
+        glBindVertexArray(quadVAO);
+        glBindTexture(GL_TEXTURE_2D, texture->id);
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glBindVertexArray(0);
+
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        int w;
+        int h;
+        glfwGetWindowSize(win.window, &w, &h);
+        glViewport(0, 0, w, h);
+        fennec_shader_use(fbshader);
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glBindVertexArray(quadVAO);
+        glBindTexture(GL_TEXTURE_2D, framebuffer->texture->id);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
 
         glfwSwapBuffers(win.window);
         glfwPollEvents();
     }
 
     fennec_shader_free(shader);
+    fennec_shader_free(fbshader);
     fennec_texture_free(texture);
+    fennec_framebuffer_free(framebuffer);
 
     glfwTerminate();
     return 0;

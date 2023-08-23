@@ -24,6 +24,7 @@ static const int FENNEC_VERSION = 1;
 #include "fileio.h"
 #include "dynarray.h"
 #include "texture.h"
+#include "framebuffer.h"
 
 #endif
 

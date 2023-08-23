@@ -6,9 +6,6 @@
 
 #include <stdlib.h>
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
-
 #include "log.h"
 
 /* NOTE:
@@ -40,8 +37,26 @@ typedef struct {
  *
  * @argument
  * The filename to load
+ *
+ * @argument
+ * The format of the texture, eg. RGB, RGBA
  */
-FennecTexture *fennec_texture_new(char*);
+FennecTexture *fennec_texture_new(char*, GLuint);
+
+/*
+ * @description
+ * Creates an empty OpenGL texture with the width and height specified
+ *
+ * @argument
+ * The width of the new texture
+ *
+ * @argument
+ * The height of the new texture
+ *
+ * @argument
+ * The format of the texture eg. GL_RGB, GL_RGBA, etc.
+ */
+FennecTexture *fennec_texture_empty(int, int, GLuint);
 
 /*
  * @description
