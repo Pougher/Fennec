@@ -18,4 +18,19 @@
  */
 char *fennec_read_file(char*);
 
+/*
+ * @description
+ * Writes a character buffer to a file. If the file already exists, then in is
+ * overwritten with the data supplied to the function
+ *
+ * @argument
+ * The name of the file
+ *
+ * @argument
+ * The buffer that is to be written to the filke
+ *
+ * @argument the length of the buffer
+ */
+void fennec_write_file(char*, char*, size_t);
+
 #endif

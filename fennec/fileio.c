@@ -1,7 +1,7 @@
 #include "fileio.h"
 
 char *fennec_read_file(char *filename) {
-    FILE* fp;
+    FILE *fp;
     long file_size;
 
     fp = fopen(filename, "rb");
@@ -30,4 +30,17 @@ char *fennec_read_file(char *filename) {
 
     fclose(fp);
     return buffer;
+}
+
+void fennec_write_file(char *filename, char *buffer, size_t length) {
+    FILE *fp = fopen(filename, "w");
+
+    if (fp == NULL) {
+        char buff[32 + strlen(filename)];
+        sprintf(buff, "Could not open file '%s'", filename);
+        fennec_log_error(buff);
+        return;
+    }
+    fwrite(buffer, sizeof(char), length, fp);
+    fclose(fp);
 }

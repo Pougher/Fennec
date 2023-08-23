@@ -5,7 +5,7 @@ void fennec_log_error(char *err) {
     char* dt = ctime(&now);
 
     dt[strlen(dt) - 1] = 0;
-    fprintf(stderr, "[Fennec %s \033[38;5;196mERROR\033[0m]: %s\n", dt, err);
+    fprintf(stderr, "[%s \033[38;5;196mERROR\033[0m]: %s\n", dt, err);
 }
 
 void fennec_log_info(char *info) {
@@ -13,7 +13,7 @@ void fennec_log_info(char *info) {
     char* dt = ctime(&now);
 
     dt[strlen(dt) - 1] = 0;
-    printf("[Fennec %s \033[38;5;33mINFO\033[0m]: %s\n", dt, info);
+    printf("[%s \033[38;5;33mINFO\033[0m]: %s\n", dt, info);
 }
 
 void fennec_log_warning(char *warning) {
@@ -21,5 +21,5 @@ void fennec_log_warning(char *warning) {
     char* dt = ctime(&now);
 
     dt[strlen(dt) - 1] = 0;
-    printf("[Fennec %s \033[38;5;208mWARNING\033[0m]: %s\n", dt, warning);
+    printf("[%s \033[38;5;208mWARNING\033[0m]: %s\n", dt, warning);
 }
